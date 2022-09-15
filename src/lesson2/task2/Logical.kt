@@ -18,7 +18,14 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    val firstdigit = number / 1000
+    val seconddigit = number / 100 % 10
+    val thirddigit = number % 100 / 10
+    val fourthdigit = number % 10
+    if (firstdigit + seconddigit == thirddigit + fourthdigit) return true
+    return false
+}
 
 /**
  * Простая (2 балла)
@@ -37,7 +44,6 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int = TODO()
-
 /**
  * Простая (2 балла)
  *
@@ -59,4 +65,19 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val min = minOf(a, b, c)
+    val min2 = minOf(r, s)
+    val max = maxOf(a, b, c)
+    val max2 = maxOf(r, s)
+    if (a in min..max) {
+        if (min <= min2 && a <= max2) return true
+    }
+    if (b in min..max) {
+        if (min <= min2 && b <= max2) return true
+    }
+    if (c in min..max) {
+        if (min <= min2 && c <= max2) return true
+    }
+    return false
+}
