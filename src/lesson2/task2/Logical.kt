@@ -79,5 +79,6 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     if (c in min..max) {
         if (min <= min2 && c <= max2) return true
     }
+    if (max2 < a && max2 < b || max2 < a && max2 < c || max2 < b && max2 < c) return false
     return false
 }
