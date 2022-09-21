@@ -69,13 +69,13 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    return when {
+fun ageDescription(age: Int): String =
+    when {
         age % 10 == 1 && age != 11 && age != 111 || age == 1 -> "$age год"
         age % 10 in 2..4 && age !in 12..14 && age !in 112..114 -> "$age года"
         else -> "$age лет"
     }
-}
+
 
 /**
  * Простая (2 балла)
@@ -94,11 +94,15 @@ fun timeForHalfWay(
     val s1 = t1 * v1
     val s2 = t2 * v2
     val s3 = t3 * v3
-    if (halfway <= s1) return halfway / v1
-    if (halfway <= s1 + s2) return t1 + ((halfway - s1) / v2)
-    if (halfway <= s1 + s2 + s3) return t1 + t2 + ((halfway - s1 - s2) / v3)
-    return 0.0
+    return when {
+        (halfway <= s1) -> halfway / v1
+        (halfway <= s1 + s2) -> t1 + ((halfway - s1) / v2)
+        (halfway <= s1 + s2 + s3) -> t1 + t2 + ((halfway - s1 - s2) / v3)
+        else -> 0.0
+    }
 }
+
+
 
 /**
  * Простая (2 балла)
@@ -147,27 +151,18 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    if (a + b > c && a + c > b && b + c > a) {
-        if (a > b && a > c) {
-            if (sqr(a) == sqr(b) + sqr(c)) return 1
-            if (sqr(a) < sqr(b) + sqr(c)) return 0
-            if (sqr(a) > sqr(b) + sqr(c)) return 2
-        }
-        if (b > a && b > c) {
-            if (sqr(b) == sqr(a) + sqr(c)) return 1
-            if (sqr(b) < sqr(a) + sqr(c)) return 0
-            if (sqr(b) > sqr(a) + sqr(c)) return 2
-        }
-        if (c > a && c > b) {
-            if (sqr(c) == sqr(a) + sqr(b)) return 1
-            if (sqr(c) < sqr(b) + sqr(a)) return 0
-            if (sqr(c) > sqr(b) + sqr(a)) return 2
-        }
-        if (a == c || a == b || b == c) {
-            return 0
+    val max = maxOf(a, b, c)
+    val min = minOf(a, b, c)
+    val mid = a + b + c - min - max
+    if (a < b + c && b < a + c && c < a + b) {
+        return when {
+            (a == b || a == c || b == c) -> 0
+            (sqr(max) < sqr(mid) + sqr(min)) -> 0
+            (sqr(max) == sqr(mid) + sqr(min)) -> 1
+            else -> 2
         }
     }
-    return (-1)
+    return - 1
 }
 
 /**
