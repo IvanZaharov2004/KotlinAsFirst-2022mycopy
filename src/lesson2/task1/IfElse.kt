@@ -95,9 +95,9 @@ fun timeForHalfWay(
     val s2 = t2 * v2
     val s3 = t3 * v3
     return when {
-        (halfway <= s1) -> halfway / v1
-        (halfway <= s1 + s2) -> t1 + ((halfway - s1) / v2)
-        (halfway <= s1 + s2 + s3) -> t1 + t2 + ((halfway - s1 - s2) / v3)
+        halfway <= s1 -> halfway / v1
+        halfway <= s1 + s2 -> t1 + (halfway - s1) / v2
+        halfway <= s1 + s2 + s3 -> t1 + t2 + (halfway - s1 - s2) / v3
         else -> 0.0
     }
 }
@@ -156,9 +156,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val mid = a + b + c - min - max
     if (a < b + c && b < a + c && c < a + b) {
         return when {
-            (a == b || a == c || b == c) -> 0
-            (sqr(max) < sqr(mid) + sqr(min)) -> 0
-            (sqr(max) == sqr(mid) + sqr(min)) -> 1
+            a == b || a == c || b == c -> 0
+            sqr(max) < sqr(mid) + sqr(min) -> 0
+            sqr(max) == sqr(mid) + sqr(min) -> 1
             else -> 2
         }
     }
@@ -173,8 +173,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return when {
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+     when {
         a in c..d && b in c..d -> b - a
         a in c..d && b !in c..d -> d - a
         b in c..d && a !in c..d -> b - c
@@ -183,4 +183,4 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
         d in a..b && c !in a..b -> d - a
         else -> -1
     }
-}
+
