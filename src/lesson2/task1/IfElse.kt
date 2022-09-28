@@ -117,14 +117,13 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int {
-    return when {
+): Int =
+    when {
         kingX != rookX2 && kingY == rookY1 || kingY != rookY2 && kingX == rookX1 -> 1
         kingX == rookX1 && kingY == rookY2 || kingX == rookX2 && kingY == rookY1 -> 3
         kingX != rookX1 && kingX != rookX2 && kingY != rookY1 && kingY != rookY2 -> 0
         else ->2
     }
-}
 
 /**
  * Простая (2 балла)
@@ -156,10 +155,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val mid = a + b + c - min - max
     if (a < b + c && b < a + c && c < a + b) {
         return when {
-            a == b || a == c || b == c -> 0
-            sqr(max) < sqr(mid) + sqr(min) -> 0
             sqr(max) == sqr(mid) + sqr(min) -> 1
-            else -> 2
+            sqr(max) > sqr(mid) + sqr(min) -> 2
+            else -> 0
         }
     }
     return - 1
