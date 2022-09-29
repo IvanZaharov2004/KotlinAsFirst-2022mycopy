@@ -78,7 +78,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 1
     var number = n
-    while (number / 10 > 0) {
+    while (number / 10 != 0) {
         count += 1
         number /= 10
     }
@@ -171,7 +171,7 @@ fun collatzSteps(x: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var k = 1
-    while (k > 0) {
+    while (k >= 1) {
         if (k % m == 0 && k % n == 0) break
         k++
     }
