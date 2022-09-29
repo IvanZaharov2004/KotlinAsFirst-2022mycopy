@@ -2,6 +2,9 @@
 
 package lesson3.task1
 
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -72,7 +75,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 1
+    var number = n
+    while (number / 10 > 0) {
+        count += 1
+        number /= 10
+    }
+    return count
+}
+
 
 /**
  * Простая (2 балла)
@@ -80,21 +92,50 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var i = 2
+    var number1 = 0
+    var number2 = 1
+    var numberN = number1 + number2
+    while (i < n) {
+        number1 = number2
+        number2 = numberN
+        numberN = number2 + number1
+        i += 1
+    }
+    return numberN
+}
+
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var divisor = 2
+    while (n > 1) {
+        if (n % divisor == 0) break
+        divisor += 1
+    }
+    return divisor
+}
+
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var divisor = n - 1
+    while (n > 1) {
+        if (n % divisor == 0) break
+        divisor -= 1
+    }
+    return divisor
+}
+
 
 /**
  * Простая (2 балла)
@@ -112,7 +153,15 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var count = 0
+    var num = x
+    while (num != 1 && num > 0) {
+        if (num % 2 == 0) num /= 2 else num = 3 * num + 1
+        count++
+    }
+    return count
+}
 
 /**
  * Средняя (3 балла)
@@ -120,7 +169,14 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var k = 1
+    while (k > 0) {
+        if (k % m == 0 && k % n == 0) break
+        k++
+    }
+    return k
+}
 
 /**
  * Средняя (3 балла)
@@ -129,7 +185,14 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var div = 2
+    while (div <= m && div <= n) {
+        if (m % div == 0 && n % div == 0) return false
+        div++
+    }
+    return true
+}
 
 /**
  * Средняя (3 балла)
@@ -170,7 +233,20 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var degree = 1
+    var minus = 1
+    var sinx = 0.0
+    var num = 50.0
+    val x2 = x % (2 * PI)
+    while (abs(num) >= eps) {
+        num = x2.pow(degree) / factorial(degree)
+        sinx += num * minus
+        minus *= -1
+        degree += 2
+    }
+    return sinx
+}
 
 /**
  * Средняя (4 балла)
@@ -181,7 +257,20 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var degree = 0
+    var minus = 1
+    var cosx = 0.0
+    var num = 50.0
+    val x2 = x % (2 * PI)
+    while (abs(num) >= eps) {
+        num = x2.pow(degree) / factorial(degree)
+        cosx += num * minus
+        minus *= -1
+        degree += 2
+    }
+    return cosx
+}
 
 /**
  * Сложная (4 балла)
@@ -204,3 +293,5 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
+
+
