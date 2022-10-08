@@ -113,8 +113,8 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (div in 2..n / 2) {
-        if (n % div == 0) return div
+    for (divis in 2..n / 2) {
+        if (n % divis == 0) return divis
     }
     return n
 }
