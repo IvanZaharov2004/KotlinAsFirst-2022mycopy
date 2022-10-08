@@ -114,7 +114,7 @@ fun fib(n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     var divisor = 2
-    while (n > 1) {
+    while (n > divisor) {
         if (n % divisor == 0) break
         divisor += 1
     }
@@ -169,12 +169,7 @@ fun collatzSteps(x: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    for (k in 1..m * n) {
-        if (k % n == 0 && k % m == 0) return k
-    }
-    return m * n
-}
+fun lcm(m: Int, n: Int): Int = TODO()
 
 
 /**
@@ -185,10 +180,9 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var div = 2
-    while (div <= m && div <= n) {
-        if (m % div == 0 && n % div == 0) return false
-        div++
+    val div = maxOf(m, n)
+    for (k in 2..div) {
+        if (m % k == 0 && n % k == 0) return false
     }
     return true
 }
