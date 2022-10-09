@@ -149,9 +149,9 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
 fun times(a: List<Int>, b: List<Int>): Int {
-    var answer = 0
-    for (k in b.indices) answer += b[k] * a[k]
-    return answer
+    var ans = 0
+    for (k in b.indices) ans += b[k] * a[k]
+    return ans
 }
 
 /**
