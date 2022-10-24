@@ -285,11 +285,9 @@ fun squareSequenceDigit(n: Int): Int = TODO()
 fun fibSequenceDigit(n: Int): Int {
     var num = n
     var f = 0
-    var m = 0
     while (num > digitNumber(fib(f + 1))) {
         f++
-        m = digitNumber(fib(f))
-        num -= m
+        num -= digitNumber(fib(f))
     }
     val fibonacci = fib(f + 1)
     return (fibonacci / ((10.0).pow(digitNumber(fibonacci) - num)).toInt() % 10)
