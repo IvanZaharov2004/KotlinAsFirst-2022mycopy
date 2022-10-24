@@ -225,7 +225,15 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val list = mutableListOf<Int>()
+    var num = n
+    while (num > 0) {
+        list.add(num % base)
+        num /= base
+    }
+    return if (list.isNotEmpty()) list.reversed() else listOf(0)
+}
 
 /**
  * Сложная (4 балла)
@@ -238,7 +246,8 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String =
+    convert(n, base).joinToString(separator = "") { if (it >= 10) "${'a' + it - 10}" else "$it" }
 
 /**
  * Средняя (3 балла)
@@ -271,7 +280,19 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val romlist = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val numlist = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    var number = n
+    var st = ""
+    for (i in romlist.indices) {
+        while (number >= numlist[i]) {
+            st += (romlist[i])
+            number -= numlist[i]
+        }
+    }
+    return st
+}
 
 /**
  * Очень сложная (7 баллов)
