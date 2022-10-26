@@ -194,15 +194,15 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    val factorizedNumber = mutableListOf<Int>()
+    val factorizedNum = mutableListOf<Int>()
     var number = n
     var divisor: Int
     while (number > 1) {
         divisor = minDivisor(number)
-        factorizedNumber.add(divisor)
+        factorizedNum.add(divisor)
         number /= divisor
     }
-    return factorizedNumber
+    return factorizedNum
 }
 
 /**
