@@ -164,12 +164,8 @@ fun times(a: List<Int>, b: List<Int>): Int {
  */
 fun polynom(p: List<Int>, x: Int): Int {
     var pol = 0.0
-    val xnew = x.toDouble()
-    var degree = 0
-    for (i in p.indices) {
-        pol += p[i] * xnew.pow(degree)
-        degree += 1
-    }
+    val xNew = x.toDouble()
+    for (i in p.indices) pol += p[i] * xNew.pow(i)
     return pol.toInt()
 }
 
@@ -198,15 +194,15 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    val newlist = mutableListOf<Int>()
+    val mutableList = mutableListOf<Int>()
     var number = n
     var divisor: Int
     while (number > 1) {
         divisor = minDivisor(number)
-        newlist.add(divisor)
+        mutableList.add(divisor)
         number /= divisor
     }
-    return newlist
+    return mutableList
 }
 
 /**
@@ -281,14 +277,15 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    val romlist = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
-    val numlist = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val romList = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val numList = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     var number = n
-    var st = ""
-    for (i in romlist.indices) {
-        while (number >= numlist[i]) {
-            st += (romlist[i])
-            number -= numlist[i]
+    val st = buildString {
+        for (i in romList.indices) {
+            while (number >= numList[i]) {
+                append(romList[i])
+                number -= numList[i]
+            }
         }
     }
     return st
