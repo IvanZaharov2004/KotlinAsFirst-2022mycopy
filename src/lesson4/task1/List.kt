@@ -203,6 +203,7 @@ fun factorize(n: Int): List<Int> {
         number /= divisor
     }
     return factorizedNum
+
 }
 
 /**
@@ -298,4 +299,68 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val listOfHundreds = listOf(
+        "", "сто ", "двести ", "триста ", "четыреста ", "пятьсот ", "шестьсот ",
+        "семьсот ", "восемьсот ", "девятьсот "
+    )
+    val listOfEleven = listOf(
+        "десять ", "одиннадцать ", "двенадцать ", "тринадцать ", "четырнадцать ",
+        "пятнадцать ", "шестнадцать ", "семнадцать ", "восемнадцать ", "девятнадцать "
+    )
+    val listOfTen = listOf(
+        "", " ", "двадцать ", "тридцать ", "сорок ", "пятьдесят ", "шестьдесят ", "семьдесят ",
+        "восемьдесят ", "девяносто "
+    )
+    val num = n / 1000
+    val st = buildString {
+        if (num > 0) {
+            append(listOfHundreds[num / 100])
+            if (num / 10 % 10 == 1) {
+                append(listOfEleven[num % 10] + "тысяч ")
+            } else {
+                append(listOfTen[num / 10 % 10])
+                append(
+                    when (num % 10) {
+                        0 -> "тысяч "
+                        1 -> "одна тысяча "
+                        2 -> "две тысячи "
+                        3 -> "три тысячи "
+                        4 -> "четыре тысячи "
+                        5 -> "пять тысяч "
+                        6 -> "шесть тысяч "
+                        7 -> "семь тысяч "
+                        8 -> "восемь тысяч "
+                        9 -> "девять тысяч "
+                        else -> ""
+                    }
+                )
+            }
+        }
+        val num2 = n % 1000
+        if (num2 > 0) {
+            append(listOfHundreds[num2 / 100])
+            if (num2 / 10 % 10 == 1) {
+                append(listOfEleven[num2 % 10])
+            } else {
+                append(listOfTen[num2 / 10 % 10])
+                append(
+                    when (num2 % 10) {
+                        0 -> ""
+                        1 -> "один"
+                        2 -> "два"
+                        3 -> "три"
+                        4 -> "четыре"
+                        5 -> "пять"
+                        6 -> "шесть"
+                        7 -> "семь"
+                        8 -> "восемь"
+                        9 -> "девять"
+                        else -> ""
+                    }
+                )
+            }
+        }
+    }
+    return st.trim()
+}
