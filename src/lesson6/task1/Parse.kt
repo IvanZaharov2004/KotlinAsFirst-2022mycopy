@@ -181,7 +181,7 @@ fun mostExpensive(description: String): String {
     val str = description.replace(";", "").split(" ")
     try {
         for (i in 1 until str.size + 1 step 2) {
-            if (str[i].toDouble() > num) {
+            if (str[i].toDouble() >= num) {
                 num = str[i].toDouble()
                 res = str[i - 1]
             }
