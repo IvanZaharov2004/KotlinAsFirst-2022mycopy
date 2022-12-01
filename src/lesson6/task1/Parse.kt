@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import java.lang.IndexOutOfBoundsException
+import java.lang.NumberFormatException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -149,7 +152,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var res = 0
+    var word = ""
+    val strSplit = str.split(" ").map { it.lowercase() }
+    for (i in strSplit) {
+        if (i == word) return res - i.length - 1
+        res += i.length + 1
+        word = i
+    }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
@@ -162,7 +175,25 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    if (!description.matches(Regex("""((\w|\W)+\s\d+(\.\d*)?;?\s?)*"""))) return ""
+    var num = 0.0
+    var res = ""
+    val str = description.replace(";", "").split(" ")
+    try {
+        for (i in 1 until str.size + 1 step 2) {
+            if (str[i].toDouble() > num) {
+                num = str[i].toDouble()
+                res = str[i - 1]
+            }
+        }
+    } catch (e: NumberFormatException) {
+        return ""
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+    return res
+}
 
 /**
  * Сложная (6 баллов)
