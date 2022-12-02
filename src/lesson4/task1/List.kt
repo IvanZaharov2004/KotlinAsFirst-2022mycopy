@@ -3,7 +3,6 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
-import lesson3.task1.minDivisor
 import kotlin.math.sqrt
 import kotlin.math.pow
 
@@ -202,7 +201,7 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
+fun factorizeToString(n: Int): String = TODO()
 
 /**
  * Средняя (3 балла)
