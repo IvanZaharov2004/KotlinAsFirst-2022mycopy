@@ -2,8 +2,6 @@
 
 package lesson6.task1
 
-import java.lang.IndexOutOfBoundsException
-import java.lang.NumberFormatException
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -176,20 +174,16 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше нуля либо равны нулю.
  */
 fun mostExpensive(description: String): String {
+    if (!description.matches(Regex("""((\w|\W)+\s\d+(\.\d*)?;?\s?)""")))
+        return ""
     var num = 0.0
     var res = ""
     val str = description.replace(";", "").split(" ")
-    try {
-        for (i in 1 until str.size + 1 step 2) {
-            if (str[i].toDouble() >= num) {
-                num = str[i].toDouble()
-                res = str[i - 1]
-            }
+    for (i in 1 until str.size + 1 step 2) {
+        if (str[i].toDouble() >= num) {
+            num = str[i].toDouble()
+            res = str[i - 1]
         }
-    } catch (e: NumberFormatException) {
-        return ""
-    } catch (e: IndexOutOfBoundsException) {
-        return ""
     }
     return res
 }
@@ -244,3 +238,9 @@ fun fromRoman(roman: String): Int = TODO()
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+
+
+
+
+
+

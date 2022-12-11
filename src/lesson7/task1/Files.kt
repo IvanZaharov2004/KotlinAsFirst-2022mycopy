@@ -63,14 +63,12 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    val writer = File(outputName).bufferedWriter()
-    for (line in File(inputName).readLines()) {
-        if (line.isEmpty() || line[0] != '_') {
-            writer.write(line)
-            writer.newLine()
+    val reader = File(inputName).readLines()
+    File(outputName).bufferedWriter().use {
+        for (line in reader) {
+            if (line.isEmpty() || line.first() != '_') it.write(line + '\n')
         }
     }
-    writer.close()
 }
 
 /**
@@ -84,18 +82,9 @@ fun deleteMarked(inputName: String, outputName: String) {
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val reader = File(inputName).readLines().joinToString().lowercase()
-    val res = mutableMapOf<String, Int>()
-    for (sub in substrings) {
-        var k = 0
-        var count = reader.indexOf(sub.lowercase())
-        while (count != -1) {
-            k += 1
-            count = reader.indexOf(sub.lowercase(), count + 1)
-        }
-        res[sub] = k
-    }
-    return res
+    return substrings.associateWith { sub -> reader.windowed(sub.length).count { it == sub.lowercase() } }
 }
+
 
 
 /**
@@ -133,14 +122,15 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    val file = File(inputName).readLines()
-    val max = file.maxOfOrNull { it.trim().length }
+    val text = File(inputName).readLines()
+    val max = text.maxOfOrNull { it.trim().length }
     val writer = File(outputName).bufferedWriter()
     writer.use {
-        for (line in file) {
+        for (line in text) {
             if (max != null) {
                 val length = line.trim().length
-                it.write(" ".repeat((max - length) / 2) + line.trim() + "\n")
+                it.write(" ".repeat((max - length) / 2) + line.trim())
+                it.newLine()
             }
         }
     }
