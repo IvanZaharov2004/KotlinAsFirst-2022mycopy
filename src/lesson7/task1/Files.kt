@@ -164,7 +164,28 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val reader = File(inputName).readLines().map { it.replace(Regex(" +"), " ") }
+    val length = File(inputName).readLines().maxOfOrNull { it.replace(Regex(" +"), " ").trim().length }
+    File(outputName).bufferedWriter().use {
+        if (length != null) {
+            for (line in reader) {
+                val changed = Regex("""\s""").split(line.trim()).toMutableList()
+                if (changed.size != 1 && line.isNotEmpty()) {
+                    var count = 0
+                    var leap = length - line.trim().length
+                    while (leap > 0) {
+                        changed[count] += " "
+                        if (count < changed.size - 2)
+                            count += 1
+                        else count = 0
+                        leap -= 1
+                    }
+                    it.write(changed.joinToString(" "))
+                } else it.write(line.trim())
+                it.newLine()
+            }
+        }
+    }
 }
 
 /**
@@ -176,7 +197,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Если в тексте менее 20 различных слов, вернуть все слова.
  * Вернуть ассоциативный массив с числом слов больше 20, если 20-е, 21-е, ..., последнее слова
  * имеют одинаковое количество вхождений (см. также тест файла input/onegin.txt).
- *
  * Словом считается непрерывная последовательность из букв (кириллических,
  * либо латинских, без знаков препинания и цифр).
  * Цифры, пробелы, знаки препинания считаются разделителями слов:
