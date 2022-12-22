@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import java.lang.StringBuilder
 import kotlin.math.sqrt
 import kotlin.math.pow
 
@@ -287,10 +288,9 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String {
-    val listOfHundreds = listOf(
-        "", "сто ", "двести ", "триста ", "четыреста ", "пятьсот ", "шестьсот ",
-        "семьсот ", "восемьсот ", "девятьсот "
+fun russianSub(n: Int): String {
+    val listOfOne = listOf(
+        "", "один ", "два ", "три ", "четыре ", "пять ", "шесть ", "семь ", "восемь ", "девять "
     )
     val listOfEleven = listOf(
         "десять ", "одиннадцать ", "двенадцать ", "тринадцать ", "четырнадцать ",
@@ -300,55 +300,31 @@ fun russian(n: Int): String {
         "", " ", "двадцать ", "тридцать ", "сорок ", "пятьдесят ", "шестьдесят ", "семьдесят ",
         "восемьдесят ", "девяносто "
     )
-    val num = n / 1000
-    val st = buildString {
-        if (num > 0) {
-            append(listOfHundreds[num / 100])
-            if (num / 10 % 10 == 1) {
-                append(listOfEleven[num % 10] + "тысяч ")
-            } else {
-                append(listOfTen[num / 10 % 10])
-                append(
-                    when (num % 10) {
-                        0 -> "тысяч "
-                        1 -> "одна тысяча "
-                        2 -> "две тысячи "
-                        3 -> "три тысячи "
-                        4 -> "четыре тысячи "
-                        5 -> "пять тысяч "
-                        6 -> "шесть тысяч "
-                        7 -> "семь тысяч "
-                        8 -> "восемь тысяч "
-                        9 -> "девять тысяч "
-                        else -> ""
-                    }
-                )
-            }
-        }
-        val num2 = n % 1000
-        if (num2 > 0) {
-            append(listOfHundreds[num2 / 100])
-            if (num2 / 10 % 10 == 1) {
-                append(listOfEleven[num2 % 10])
-            } else {
-                append(listOfTen[num2 / 10 % 10])
-                append(
-                    when (num2 % 10) {
-                        0 -> ""
-                        1 -> "один"
-                        2 -> "два"
-                        3 -> "три"
-                        4 -> "четыре"
-                        5 -> "пять"
-                        6 -> "шесть"
-                        7 -> "семь"
-                        8 -> "восемь"
-                        9 -> "девять"
-                        else -> ""
-                    }
-                )
-            }
-        }
+    val listOfHundreds = listOf(
+        "", "сто ", "двести ", "триста ", "четыреста ", "пятьсот ", "шестьсот ",
+        "семьсот ", "восемьсот ", "девятьсот "
+    )
+    val res = StringBuilder()
+    if (n / 100 != 0) res.append(listOfHundreds[n / 100])
+    if (n / 10 % 10 != 0) {
+        if (n / 10 % 10 == 1) res.append(listOfEleven[n % 10])
+        else res.append(listOfTen[n / 10 % 10])
     }
-    return st.trim()
+    if (n % 10 != 0 && n / 10 % 10 != 1) res.append(listOfOne[n % 10])
+    return res.toString().trim()
+}
+
+fun russian(n: Int): String {
+    val num = n / 1000
+    val num2 = n % 1000
+    var gap = ""
+    if (num != 0) {
+        val sub = russianSub(num)
+        gap = if (num % 100 in 11..19 || num % 100 % 10 == 0 || num % 100 % 10 in 5..9) "$sub тысяч "
+        else if (num % 100 % 10 == 2) sub.substring(0, sub.length - 1) + "е тысячи "
+        else if (num % 100 % 10 == 1) sub.substring(0, sub.length - 2) + "на тысяча "
+        else "$sub тысячи "
+    }
+    gap += russianSub(num2)
+    return gap.trim()
 }
