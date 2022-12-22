@@ -170,7 +170,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     writer.use {
         if (length != null) {
             for (line in reader) {
-                val changed = Regex("""\s""").split(line).toMutableList()
+                val changed = line.split(Regex("""\s""")).toMutableList()
                 if (changed.size != 1 && line.isNotEmpty()) {
                     var count = 0
                     var leap = length - line.length
